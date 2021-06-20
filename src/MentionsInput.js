@@ -944,7 +944,7 @@ class MentionsInput extends React.Component {
   }
 
   addMention = (
-    { id, display },
+    { id, display, type },
     { childIndex, querySequenceStart, querySequenceEnd, plainTextValue }
   ) => {
     // Insert mention in the marked up value at the correct position
@@ -960,7 +960,7 @@ class MentionsInput extends React.Component {
 
     const start = mapPlainTextIndex(value, config, querySequenceStart, 'START')
     const end = start + querySequenceEnd - querySequenceStart
-    let insert = makeMentionsMarkup(markup, id, display)
+    let insert = makeMentionsMarkup(markup, id, display, type)
     if (appendSpaceOnAdd) {
       insert += ' '
     }
