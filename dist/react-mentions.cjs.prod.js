@@ -30,7 +30,7 @@ var _toConsumableArray = _interopDefault(require("@babel/runtime/helpers/toConsu
 }, countPlaceholders = function(markup) {
   var count = 0;
   return markup.indexOf("__id__") >= 0 && count++, markup.indexOf("__display__") >= 0 && count++, 
-  count;
+  markup.indexOf("__type__") >= 0 && count++, count;
 }, emptyFn = function() {}, iterateMentionsMarkup = function(value, config, markupIteratee) {
   for (var match, textIteratee = arguments.length > 3 && void 0 !== arguments[3] ? arguments[3] : emptyFn, regex = combineRegExps(config.map(function(c) {
     return c.regex;
@@ -108,8 +108,8 @@ var _toConsumableArray = _interopDefault(require("@babel/runtime/helpers/toConsu
   var mentions = getMentions(value, config), lastMention = mentions[mentions.length - 1];
   return lastMention ? lastMention.plainTextIndex + lastMention.display.length : 0;
 }, markupToRegex = function(markup) {
-  var escapedMarkup = escapeRegex(markup), charAfterDisplay = markup[markup.indexOf(PLACEHOLDERS.display) + PLACEHOLDERS.display.length], charAfterId = markup[markup.indexOf(PLACEHOLDERS.id) + PLACEHOLDERS.id.length];
-  return new RegExp(escapedMarkup.replace(PLACEHOLDERS.display, "([^".concat(escapeRegex(charAfterDisplay || ""), "]+?)")).replace(PLACEHOLDERS.id, "([^".concat(escapeRegex(charAfterId || ""), "]+?)")));
+  var escapedMarkup = escapeRegex(markup), charAfterDisplay = markup[markup.indexOf(PLACEHOLDERS.display) + PLACEHOLDERS.display.length], charAfterId = markup[markup.indexOf(PLACEHOLDERS.id) + PLACEHOLDERS.id.length], charAfterType = markup[markup.indexOf(PLACEHOLDERS.type) + PLACEHOLDERS.type.length];
+  return new RegExp(escapedMarkup.replace(PLACEHOLDERS.display, "([^".concat(escapeRegex(charAfterDisplay || ""), "]+?)")).replace(PLACEHOLDERS.id, "([^".concat(escapeRegex(charAfterId || ""), "]+?)")).replace(PLACEHOLDERS.type, "([^".concat(escapeRegex(charAfterType || ""), "]+?)")));
 }, readConfigFromChildren = function(children) {
   return React.Children.toArray(children).map(function(_ref) {
     var _ref$props = _ref.props, markup = _ref$props.markup, regex = _ref$props.regex, displayTransform = _ref$props.displayTransform;

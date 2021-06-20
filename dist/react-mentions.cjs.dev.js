@@ -71,6 +71,7 @@ var countPlaceholders = function countPlaceholders(markup) {
   var count = 0;
   if (markup.indexOf('__id__') >= 0) count++;
   if (markup.indexOf('__display__') >= 0) count++;
+  if (markup.indexOf('__type__') >= 0) count++;
   return count;
 };
 
@@ -305,7 +306,8 @@ var markupToRegex = function markupToRegex(markup) {
   var escapedMarkup = escapeRegex(markup);
   var charAfterDisplay = markup[markup.indexOf(PLACEHOLDERS.display) + PLACEHOLDERS.display.length];
   var charAfterId = markup[markup.indexOf(PLACEHOLDERS.id) + PLACEHOLDERS.id.length];
-  return new RegExp(escapedMarkup.replace(PLACEHOLDERS.display, "([^".concat(escapeRegex(charAfterDisplay || ''), "]+?)")).replace(PLACEHOLDERS.id, "([^".concat(escapeRegex(charAfterId || ''), "]+?)")));
+  var charAfterType = markup[markup.indexOf(PLACEHOLDERS.type) + PLACEHOLDERS.type.length];
+  return new RegExp(escapedMarkup.replace(PLACEHOLDERS.display, "([^".concat(escapeRegex(charAfterDisplay || ''), "]+?)")).replace(PLACEHOLDERS.id, "([^".concat(escapeRegex(charAfterId || ''), "]+?)")).replace(PLACEHOLDERS.type, "([^".concat(escapeRegex(charAfterType || ''), "]+?)")));
 };
 
 var readConfigFromChildren = function readConfigFromChildren(children) {
